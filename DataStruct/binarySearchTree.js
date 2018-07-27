@@ -105,6 +105,35 @@ class node {
     
     return head;
   }
+  
+
+  findRange(result, head, start, end){
+   // let self = head;
+    if(start === end || head === null)
+      return;
+    
+    this.findRange(result, head.left, start, end);
+    if(head.value >= start && head.value <= end){
+      result.push(head.value);
+    }
+   // console.log(head.value);
+    this.findRange(result,head.right, start, end);
+    return; 
+  }
+  
+  optfindRange(result, head, start, end){
+    if(start === end || head === null || head.value < start || head.value > end)
+      return;
+    
+    if(head.value >= start){
+      this.findRange(result, head.left, start, end);
+    }
+    result.push(head.value);
+    if(head.value <= end){
+      this.findRange(result, head.right, start, end);
+    }
+    return;
+  }
 }
 
 
@@ -115,10 +144,10 @@ head.addNode(2);
 head.addNode(-1);
 head.addNode(3);
 head.addNode(2.5);
-head.addNode(1.5)
-head.printIn(head);
-console.log('________')
-head = head.deleteNode(head, 2);
+head.addNode(1.5);
+head.addNode(0);
 head.printIn(head);
 
-//console.log(head.getHeight(head));
+let result = [];
+head.optfindRange(result,head, -1, 2);
+console.log(result)
